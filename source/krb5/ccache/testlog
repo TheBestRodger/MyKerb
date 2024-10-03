@@ -1,0 +1,96 @@
+*** [1] Executing: /home/kerberos/krb5-1.21.3/src/clients/klist/klist -c KEYRING:process:abcd
+klist: Unknown credential cache type while resolving ccache
+*** [1] Completed with return code 1
+*** Skipping: keyring collection tests: keyring support not built
+*** [2] Executing: ./t_cccol DIR:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc
+*** [2] Completed with return code 0
+*** [3] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util create -s -P master
+Initializing database '/usr/local/var/krb5kdc/principal' for realm 'KRBTEST.COM',
+master key name 'K/M@KRBTEST.COM'
+*** [3] Completed with return code 0
+*** [4] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw user33033 user@KRBTEST.COM
+*** [4] Completed with return code 0
+*** [5] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin33033 user/admin@KRBTEST.COM
+*** [5] Completed with return code 0
+*** [6] Starting: /home/kerberos/krb5-1.21.3/src/kdc/krb5kdc -n
+krb5kdc: starting...
+*** [6] Started with pid 33039
+*** [7] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit user@KRBTEST.COM
+Password for user@KRBTEST.COM: 
+*** [7] Completed with return code 0
+*** [8] Executing: /home/kerberos/krb5-1.21.3/src/clients/klist/klist /home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+Ticket cache: FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+Default principal: user@KRBTEST.COM
+
+Valid starting     Expires            Service principal
+09/30/24 13:11:07  10/01/24 13:11:07  krbtgt/KRBTEST.COM@KRBTEST.COM
+*** [8] Completed with return code 0
+*** [9] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw alice33033 alice
+*** [9] Completed with return code 0
+*** [10] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw bob33033 bob
+*** [10] Completed with return code 0
+*** [11] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit -c DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt1 user
+Password for user@KRBTEST.COM: 
+*** [11] Completed with return code 0
+*** [12] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit -c DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt2 alice
+Password for alice@KRBTEST.COM: 
+*** [12] Completed with return code 0
+*** [13] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit -c DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt3 bob
+Password for bob@KRBTEST.COM: 
+*** [13] Completed with return code 0
+
+====== FILE cursor ======
+*** [14] Executing: ./t_cccursor
+FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+*** [14] Completed with return code 0
+*** [15] Executing: ./t_cccursor /home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+*** [15] Completed with return code 0
+*** [16] Executing: ./t_cccursor FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+*** [16] Completed with return code 0
+
+====== DIR cursor ======
+*** [17] Executing: ./t_cccursor DIR:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt3
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt2
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt1
+*** [17] Completed with return code 0
+*** [18] Executing: ./t_cccursor DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt1
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt1
+*** [18] Completed with return code 0
+*** [19] Executing: ./t_cccursor DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/noent
+*** [19] Completed with return code 0
+
+====== MEMORY cursor ======
+*** [20] Executing: ./t_cccursor FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache MEMORY:foo
+FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache
+*** [20] Completed with return code 0
+*** [21] Executing: ./t_cccursor DIR:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc MEMORY:foo
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt3
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt2
+DIR::/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc/tkt1
+*** [21] Completed with return code 0
+*** [22] Executing: ./t_cccursor MEMORY:foo MEMORY:bar
+MEMORY:foo
+*** [22] Completed with return code 0
+
+====== krb5_cccol_have_content ======
+*** [23] Executing: ./t_cccursor DIR:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/cc CONTENT
+*** [23] Completed with return code 0
+*** [24] Executing: ./t_cccursor FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache CONTENT
+*** [24] Completed with return code 0
+*** [25] Executing: ./t_cccursor /home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache CONTENT
+*** [25] Completed with return code 0
+*** [26] Executing: ./t_cccursor MEMORY:foo CONTENT
+*** [26] Completed with return code 1
+
+====== FILE nonexistent ======
+*** [27] Executing: /home/kerberos/krb5-1.21.3/src/clients/kdestroy/kdestroy
+*** [27] Completed with return code 0
+*** [28] Executing: ./t_cccursor
+*** [28] Completed with return code 0
+*** [29] Executing: ./t_cccursor FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/ccache/testdir/ccache CONTENT
+*** [29] Completed with return code 1
+*** Daemon pid 33039 output:
+*** Success: Renewing credentials

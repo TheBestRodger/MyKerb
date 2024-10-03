@@ -1,0 +1,39 @@
+*** [1] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util create -s -P master
+Initializing database '/usr/local/var/krb5kdc/principal' for realm 'KRBTEST.COM',
+master key name 'K/M@KRBTEST.COM'
+*** [1] Completed with return code 0
+*** [2] Starting: /home/kerberos/krb5-1.21.3/src/kdc/krb5kdc -n
+krb5kdc: starting...
+*** [2] Started with pid 34903
+*** [3] Starting: /home/kerberos/krb5-1.21.3/src/kadmin/server/kadmind -nofork -p /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util -K /home/kerberos/krb5-1.21.3/src/kprop/kprop -F /home/kerberos/krb5-1.21.3/src/lib/kadm5/testdir/dump
+kadmind: starting...
+*** [3] Started with pid 34904
+*** [4] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addpol -maxlife 10000s -minlength 8 -minclasses 2 -maxfailure 2 -failurecountinterval 90s -lockoutduration 180s test-pol
+*** [4] Completed with return code 0
+*** [5] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addpol -minlife 10s minlife-pol
+*** [5] Completed with return code 0
+*** [6] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addpol dict-only-pol
+*** [6] Completed with return code 0
+*** [7] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin
+*** [7] Completed with return code 0
+*** [8] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/get
+*** [8] Completed with return code 0
+*** [9] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/modify
+*** [9] Completed with return code 0
+*** [10] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/delete
+*** [10] Completed with return code 0
+*** [11] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/add
+*** [11] Completed with return code 0
+*** [12] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/rename
+*** [12] Completed with return code 0
+*** [13] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin admin/none
+*** [13] Completed with return code 0
+*** [14] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw us3r -policy minlife-pol user
+*** [14] Completed with return code 0
+*** [15] Executing: ./t_kadm5srv srv
+*** [15] Completed with return code 0
+*** [16] Executing: ./t_kadm5clnt clnt
+*** [16] Completed with return code 0
+*** Daemon pid 34903 output:
+*** Daemon pid 34904 output:
+*** Success: kadm5 API tests

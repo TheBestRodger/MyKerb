@@ -1,0 +1,45 @@
+*** [1] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util create -s -P master
+Initializing database '/usr/local/var/krb5kdc/principal' for realm 'KRBTEST.COM',
+master key name 'K/M@KRBTEST.COM'
+*** [1] Completed with return code 0
+*** [2] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw user34826 user@KRBTEST.COM
+*** [2] Completed with return code 0
+*** [3] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin34826 user/admin@KRBTEST.COM
+*** [3] Completed with return code 0
+*** [4] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -randkey host/clean-ubuntu-krb@KRBTEST.COM
+*** [4] Completed with return code 0
+*** [5] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ktadd -k /home/kerberos/krb5-1.21.3/src/lib/rpc/unit-test/testdir/keytab -norandkey host/clean-ubuntu-krb@KRBTEST.COM
+Entry for principal host/clean-ubuntu-krb@KRBTEST.COM with kvno 1, encryption type aes256-cts-hmac-sha1-96 added to keytab WRFILE:/home/kerberos/krb5-1.21.3/src/lib/rpc/unit-test/testdir/keytab.
+Entry for principal host/clean-ubuntu-krb@KRBTEST.COM with kvno 1, encryption type aes128-cts-hmac-sha1-96 added to keytab WRFILE:/home/kerberos/krb5-1.21.3/src/lib/rpc/unit-test/testdir/keytab.
+*** [5] Completed with return code 0
+*** [6] Starting: /home/kerberos/krb5-1.21.3/src/kdc/krb5kdc -n
+krb5kdc: starting...
+*** [6] Started with pid 34832
+*** [7] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit user@KRBTEST.COM
+Password for user@KRBTEST.COM: 
+*** [7] Completed with return code 0
+*** [8] Executing: /home/kerberos/krb5-1.21.3/src/clients/klist/klist /home/kerberos/krb5-1.21.3/src/lib/rpc/unit-test/testdir/ccache
+Ticket cache: FILE:/home/kerberos/krb5-1.21.3/src/lib/rpc/unit-test/testdir/ccache
+Default principal: user@KRBTEST.COM
+
+Valid starting     Expires            Service principal
+09/30/24 13:11:19  10/01/24 13:11:19  krbtgt/KRBTEST.COM@KRBTEST.COM
+*** [8] Completed with return code 0
+*** [9] Starting: ./server -t
+running
+*** [9] Started with pid 34835
+*** [10] Executing: ./client -t clean-ubuntu-krb 668 host@clean-ubuntu-krb 1026
+...........
+*** [10] Completed with return code 0
+rpc_test server: bad verifier from user@KRBTEST.COM at 127.0.0.1:669 for host
+rpc_test server: bad verifier from user@KRBTEST.COM at 127.0.0.1:669 for host
+rpc_test server: bad verifier from user@KRBTEST.COM at 127.0.0.1:669 for host
+rpc_test server: bad verifier from user@KRBTEST.COM at 127.0.0.1:669 for host
+*** [11] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -randkey nokey/clean-ubuntu-krb
+*** [11] Completed with return code 0
+*** [12] Executing: ./client -t clean-ubuntu-krb 668 nokey@clean-ubuntu-krb 1026
+./client: RPC: Authentication error
+*** [12] Completed with return code 2
+*** Daemon pid 34832 output:
+*** Daemon pid 34835 output:
+*** Success: gssrpc auth_gssapi tests

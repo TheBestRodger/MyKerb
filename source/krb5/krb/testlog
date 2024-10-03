@@ -1,0 +1,92 @@
+*** [1] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util create -s -P master
+Initializing database '/usr/local/var/krb5kdc/principal' for realm 'KRBTEST.COM',
+master key name 'K/M@KRBTEST.COM'
+*** [1] Completed with return code 0
+*** [2] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw user33379 user@KRBTEST.COM
+*** [2] Completed with return code 0
+*** [3] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local addprinc -pw admin33379 user/admin@KRBTEST.COM
+*** [3] Completed with return code 0
+*** [4] Starting: /home/kerberos/krb5-1.21.3/src/kdc/krb5kdc -n
+krb5kdc: starting...
+*** [4] Started with pid 33383
+*** [5] Executing: /home/kerberos/krb5-1.21.3/src/clients/kinit/kinit user@KRBTEST.COM
+Password for user@KRBTEST.COM: 
+*** [5] Completed with return code 0
+*** [6] Executing: /home/kerberos/krb5-1.21.3/src/clients/klist/klist /home/kerberos/krb5-1.21.3/src/lib/krb5/krb/testdir/ccache
+Ticket cache: FILE:/home/kerberos/krb5-1.21.3/src/lib/krb5/krb/testdir/ccache
+Default principal: user@KRBTEST.COM
+
+Valid starting     Expires            Service principal
+09/30/24 13:11:15  10/01/24 13:11:15  krbtgt/KRBTEST.COM@KRBTEST.COM
+*** [6] Completed with return code 0
+*** [7] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ank -pw pw +preauth puser
+*** [7] Completed with return code 0
+*** [8] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ank -nokey nokey
+*** [8] Completed with return code 0
+*** [9] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ank -nokey +preauth pnokey
+*** [9] Completed with return code 0
+*** [10] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ank -e aes256-cts:special -pw pw exp
+*** [10] Completed with return code 0
+*** [11] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/cli/kadmin.local ank -e aes256-cts:special -pw pw +preauth pexp
+*** [11] Completed with return code 0
+*** [12] Executing: /home/kerberos/krb5-1.21.3/src/kadmin/dbutil/kdb5_util tabdump keyinfo
+name	keyindex	kvno	enctype	salttype	salt
+K/M@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+exp@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	special	4e4344404c4445414c43464a46424a42
+kadmin/admin@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+kadmin/admin@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+kadmin/changepw@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+kadmin/changepw@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+krbtgt/KRBTEST.COM@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+krbtgt/KRBTEST.COM@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+pexp@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	special	464043434b4b484e48434443404c4446
+puser@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+puser@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+user/admin@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+user/admin@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+user@KRBTEST.COM	0	1	aes256-cts-hmac-sha1-96	normal	-1
+user@KRBTEST.COM	1	1	aes128-cts-hmac-sha1-96	normal	-1
+*** [12] Completed with return code 0
+*** [13] Executing: ./t_get_etype_info notfound
+Client not found in Kerberos database
+*** [13] Completed with return code 1
+*** [14] Executing: ./t_get_etype_info user
+etype: aes256-cts
+salt: KRBTEST.COMuser
+*** [14] Completed with return code 0
+*** [15] Executing: ./t_get_etype_info puser
+etype: aes256-cts
+salt: KRBTEST.COMpuser
+*** [15] Completed with return code 0
+*** [16] Executing: ./t_get_etype_info -e aes128-cts user
+etype: aes128-cts
+salt: KRBTEST.COMuser
+*** [16] Completed with return code 0
+*** [17] Executing: ./t_get_etype_info -e aes128-cts puser
+etype: aes128-cts
+salt: KRBTEST.COMpuser
+*** [17] Completed with return code 0
+*** [18] Executing: ./t_get_etype_info -T /home/kerberos/krb5-1.21.3/src/lib/krb5/krb/testdir/ccache user
+etype: aes256-cts
+salt: KRBTEST.COMuser
+*** [18] Completed with return code 0
+*** [19] Executing: ./t_get_etype_info -T /home/kerberos/krb5-1.21.3/src/lib/krb5/krb/testdir/ccache puser
+etype: aes256-cts
+salt: KRBTEST.COMpuser
+*** [19] Completed with return code 0
+*** [20] Executing: ./t_get_etype_info nokey
+KDC has no support for encryption type
+*** [20] Completed with return code 1
+*** [21] Executing: ./t_get_etype_info pnokey
+no etype-info
+*** [21] Completed with return code 0
+*** [22] Executing: ./t_get_etype_info exp
+etype: aes256-cts
+salt: NCD@LDEALCFJFBJB
+*** [22] Completed with return code 0
+*** [23] Executing: ./t_get_etype_info pexp
+etype: aes256-cts
+salt: F@CCKKHNHCDC@LDF
+*** [23] Completed with return code 0
+*** Daemon pid 33383 output:
+*** Success: krb5_get_etype_info() tests

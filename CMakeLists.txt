@@ -9,10 +9,6 @@ include(settings.cmake)
 if(NOT EXISTS ${SOURCE_PATH} OR NOT EXISTS ${INCLUDE_PATH})
 message(FATAL_ERROR "Пути SOURCE_PATH или INCLUDE_PATH не существуют.")
 endif()
-# Ваши пути SOURCE_PATH и INCLUDE_PATH должны быть определены в settings.cmake или здесь
-# Например:
-# set(SOURCE_PATH "${CMAKE_SOURCE_DIR}/source")
-# set(INCLUDE_PATH "${CMAKE_SOURCE_DIR}/include")
 
 file(GLOB_RECURSE SOURCE ${SOURCE_PATH}/*.c)
 file(GLOB_RECURSE HEADER ${INCLUDE_PATH}/*.h)
